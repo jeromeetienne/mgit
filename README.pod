@@ -1,0 +1,23 @@
+=head1 SYNOPSIS
+
+mgit command [dirname [dirname..]
+
+=head1 Description
+
+mgit is a simple ruby script which make basic tasks easier on multiple repositories.
+
+if no B<dirname> is specificied, B<dirname> default to "."
+
+Currently the possible commands are:
+
+=over
+
+=item B<pull>
+
+do a I<git pull> in each repository.
+
+=item B<push>
+
+do a I<git push> in each repository.
+
+=back
