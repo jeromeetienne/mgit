@@ -6,7 +6,8 @@ mgit command [dirname [dirname..]
 
 mgit is a simple ruby script which make basic tasks easier on multiple repositories.
 
-if no B<dirname> is specificied, B<dirname> default to "."
+if no B<dirname> is specificied, B<dirname> default to "git rev-parse --git-dir"
+result
 
 Currently the possible commands are:
 
@@ -16,8 +17,31 @@ Currently the possible commands are:
 
 do a I<git pull> in each repository.
 
+=item B<add>
+
+do a I<git add .> in each repository.
+
 =item B<push>
 
 do a I<git push> in each repository.
+
+=item B<status>
+
+Display a clear output on which repository is clean or dirty.
+
+=item B<commit>
+
+do a I<git commit -a> on each repository.
+The message default to "automatic commit"
+
+=back
+
+=head1 Options
+
+=over
+
+=item B<-m> or B<--commit_msg> I<my super msg>
+
+Change the default commit message with doing B<commit> command.
 
 =back

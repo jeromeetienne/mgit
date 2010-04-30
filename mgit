@@ -47,18 +47,14 @@ class Mgit
 	end
 	
 	def is_git_repo?(dirname)
-		is_git_repo	= is_git_repo_simple?(dirname)
-		is_git_repo	= is_git_repo_simple?(File.join(dirname,".git"))	unless is_git_repo
-		return is_git_repo
-	end
-	def is_git_repo_simple?(dirname)
-		return false unless File.directory?	dirname
-		return false unless File.directory?	File.join(dirname,"objects")
-		return false unless File.directory?	File.join(dirname,"branches")
-		return false unless File.directory?	File.join(dirname,"refs")
-		return false unless File.exists?	File.join(dirname,"config")
-		return false unless File.exists?	File.join(dirname,"HEAD")
-		return true		
+		gitdir	= File.join(dirname, ".git")
+		return false unless File.directory?	gitdir
+		return false unless File.directory?	File.join(gitdir,"objects")
+		return false unless File.directory?	File.join(gitdir,"branches")
+		return false unless File.directory?	File.join(gitdir,"refs")
+		return false unless File.exists?	File.join(gitdir,"config")
+		return false unless File.exists?	File.join(gitdir,"HEAD")
+		return true
 	end
 	
 	private
@@ -225,9 +221,20 @@ if $PROGRAM_NAME == __FILE__
 		end
 	end.parse!
 	
-
+	# parse ARGV
 	operation	= ARGV[0]
-	dirnames= ARGV[1..-1]
+	dirnames	= ARGV[1..-1]
+
+	# if no dirname is specified, it default to the git repository in which we are
+	if dirnames.nil? or dirnames.empty?
+		git_dir	= `git rev-parse --git-dir`
+		dirname	= File.dirname(git_dir.strip)
+		dirnames= [dirname]
+		require "pp"
+		pp dirnames
+	end
+
+	# instanciate the object itself
 	mgit	= Mgit.new(dirnames)
 
 	if operation == "status"
