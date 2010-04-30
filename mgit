@@ -239,6 +239,8 @@ if $PROGRAM_NAME == __FILE__
 		mgit.status
 	elsif operation == "pull"
 		mgit.pull
+	elsif operation == "push"
+		mgit.push
 	elsif operation == "commit"
 		mgit.commit_all(cmdline_opts[:commit_msg])
 	elsif operation == "add"
