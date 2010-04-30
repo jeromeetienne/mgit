@@ -224,8 +224,18 @@ if $PROGRAM_NAME == __FILE__
 	end.parse!
 	
 	# parse ARGV
-	operation	= ARGV[0]
-	dirnames	= ARGV[1..-1]
+	
+	commands	= []
+	dirnames	= []
+	for i in 0..ARGV.length-1
+		if File.directory?(ARGV[i])
+			dirnames	= ARGV[i..-1]
+			break
+		end
+		commands	<< ARGV[i]
+	end
+	# put a default command if needed	
+	commands	= ['status']	if commands.empty?
 
 	# if no dirname is specified, it default to the git repository in which we are
 	if dirnames.nil? or dirnames.empty?
@@ -237,17 +247,20 @@ if $PROGRAM_NAME == __FILE__
 	# instanciate the object itself
 	mgit	= Mgit.new(dirnames)
 
-	if operation == "status"
-		mgit.status
-	elsif operation == "pull"
-		mgit.pull
-	elsif operation == "push"
-		mgit.push
-	elsif operation == "commit"
-		mgit.commit_all(cmdline_opts[:commit_msg])
-	elsif operation == "add"
-		mgit.add_all
-	else
-		STDERR.puts "operation '#{operation}' is invalid. Use --help for details"
-	end
+	commands.each { |command|
+		if command == "status"
+			mgit.status
+		elsif command == "pull"
+			mgit.pull
+		elsif command == "push"
+			mgit.push
+		elsif command == "commit"
+			mgit.commit_all(cmdline_opts[:commit_msg])
+		elsif command == "add"
+			mgit.add_all
+		else
+			STDERR.puts "command '#{command}' is invalid. Use --help for details"
+		end
+	}
+	
 end	
