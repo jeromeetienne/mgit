@@ -22,6 +22,12 @@ class Mgit
 		}
 	end
 	
+	def push
+		@dirnames.each { |dirname|
+			push_one(dirname)
+		}
+	end
+
 	def status
 		@dirnames.each { |dirname|
 			status_one(dirname)
@@ -89,6 +95,26 @@ class Mgit
 		STDOUT.puts "#{output}"
 	end
 	
+	def push_one(dirname)
+		STDOUT.write "#{dirname}: "
+		STDOUT.flush
+		unless is_git_repo?(dirname)
+			STDOUT.puts "#{@tty_fg_red}Not a git repository#{@tty_all_off}"
+			return
+		end
+		STDOUT.puts "pushing..."
+
+		# build the cmdline
+		cmdline	= ""
+		cmdline	+= "cd #{shell_escape_word(dirname)};"
+		cmdline	+= "git push >/dev/tty 2>/dev/tty"
+		begin
+			output	= run_cmdline(cmdline)
+		rescue => e
+		end
+		STDOUT.puts "#{output}"
+	end
+
 	def status_one(dirname)
 		STDOUT.write "#{dirname}: "
 		STDOUT.flush
