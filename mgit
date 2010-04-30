@@ -230,8 +230,6 @@ if $PROGRAM_NAME == __FILE__
 		git_dir	= `git rev-parse --git-dir`
 		dirname	= File.dirname(git_dir.strip)
 		dirnames= [dirname]
-		require "pp"
-		pp dirnames
 	end
 
 	# instanciate the object itself
