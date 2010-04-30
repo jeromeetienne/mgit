@@ -225,17 +225,14 @@ if $PROGRAM_NAME == __FILE__
 	
 	# parse ARGV
 	
-	commands	= []
-	dirnames	= []
-	for i in 0..ARGV.length-1
-		if File.directory?(ARGV[i])
-			dirnames	= ARGV[i..-1]
-			break
-		end
-		commands	<< ARGV[i]
+	commands	= [ARGV[0]]
+	dirnames	= ARGV[1..-1]
+	
+	if commands == ["fullpush"]
+		commands	= ["add", "commit", "push"]
+	elsif commands == ["fullsync"]
+		commands	= ["add", "commit", "pull", "push"]
 	end
-	# put a default command if needed	
-	commands	= ['status']	if commands.empty?
 
 	# if no dirname is specified, it default to the git repository in which we are
 	if dirnames.nil? or dirnames.empty?
