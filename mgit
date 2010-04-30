@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# (c) 2010 jerome etienne
+# release under MIT license
 
 require 'optparse'
 require 'open4'
