@@ -19,33 +19,23 @@ class Mgit
 	end
 	
 	def pull
-		@dirnames.each { |dirname|
-			pull_one(dirname)
-		}
+		@dirnames.each { |dirname|	pull_one(dirname)			}
 	end
 	
 	def push
-		@dirnames.each { |dirname|
-			push_one(dirname)
-		}
+		@dirnames.each { |dirname|	push_one(dirname)			}
 	end
 
 	def status
-		@dirnames.each { |dirname|
-			status_one(dirname)
-		}
+		@dirnames.each { |dirname|	status_one(dirname)			}
 	end
 	
 	def commit_all(message)
-		@dirnames.each { |dirname|
-			commit_all_one(dirname, message)
-		}
+		@dirnames.each { |dirname|	commit_all_one(dirname, message)	}
 	end
 
 	def add_all()
-		@dirnames.each { |dirname|
-			add_all_one(dirname)
-		}
+		@dirnames.each { |dirname|	add_all_one(dirname)			}
 	end
 	
 	def is_git_repo?(dirname)
@@ -75,6 +65,7 @@ class Mgit
 	end
 
 	def pull_one(dirname)
+		# put this sequence in the cmd above, only once
 		STDOUT.write "#{dirname}: "
 		STDOUT.flush
 		unless is_git_repo?(dirname)
