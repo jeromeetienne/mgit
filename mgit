@@ -105,7 +105,9 @@ class Mgit
 	end
 
 	def status_one(dirname)
-		STDOUT.write "#{dirname}: "
+		sepa_length	= 30 - dirname.length
+		STDOUT.write	"#{dirname}" + " " * [0,sepa_length].max
+		#STDOUT.write "#{dirname}: #{File.basename(File.expand_path(dirname))}"
 		STDOUT.flush
 		unless is_git_repo?(dirname)
 			STDOUT.puts "#{@tty_fg_red}Not a git repository#{@tty_all_off}"
