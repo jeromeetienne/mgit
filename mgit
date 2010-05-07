@@ -4,7 +4,7 @@
 
 require 'optparse'
 require 'open4'
-require 'escape'
+require 'shellwords'	# same as escape gem. but in core, so no dependancy
 
 class Mgit
 	def initialize(dirnames)
@@ -193,7 +193,7 @@ class Mgit
 		return output
 	end
 	def shell_escape_word(word)
-		return Escape.shell_command(word)		
+		return Shellwords.escape(word)		
 	end
 end
 
