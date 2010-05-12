@@ -51,17 +51,31 @@ class Mgit
 	
 	private
 	def clean?(dirname)
-		# build the cmdline
-		cmdline	= ""
-		cmdline	+= "cd #{shell_escape_word(dirname)};"
-		cmdline	+= "git status | tail -1 | egrep '^nothing to commit'"
+		# test if "nothing to commit" is presenty
 		begin
+			# build the cmdline
+			cmdline	= ""
+			cmdline	+= "cd #{shell_escape_word(dirname)};"
+			cmdline	+= "git status | tail -1 | egrep -i '^nothing to commit'"
+			# run the command line
 			output	= run_cmdline(cmdline)
-			clean	= true
 		rescue => e
-			clean	= false
+			return false
 		end
-		return clean
+
+		# test if "# You branch is ahead of" is NOT present
+		begin
+			# build the cmdline
+			cmdline	= ""
+			cmdline	+= "cd #{shell_escape_word(dirname)};"
+			cmdline	+= "git status | egrep -i '^# Your branch is ahead of'"
+			# run the command line
+			output	= run_cmdline(cmdline)
+			return false
+		rescue => e
+		end
+		# if all previous tests passed, return true
+		return true
 	end
 
 	def pull_one(dirname)
