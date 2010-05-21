@@ -7,7 +7,7 @@ SRC_DIR=$(shell pwd)
 BIN_DIR=/usr/bin
 MAN_DIR=/usr/share/man/man1
 install: man
-	cp $(SRC_DIR)/mgit		$(BIN_DIR)
+	cp $(SRC_DIR)/mgit.rb		$(BIN_DIR)/mgit
 	cp $(SRC_DIR)/mgit.1		$(MAN_DIR)
 	
 uninstall:
